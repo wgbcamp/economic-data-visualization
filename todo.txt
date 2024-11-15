@@ -1,0 +1,30 @@
+Line graph displaying 3 measurements over time ~~DONE
+
+Legend to distinguish between the different indicators (color and shape for endpoints) ~~DONE
+
+Checkbox filter to toggle between different countries
+
+Dropdown to toggle between one of the 3 different measurements
+
+Slider to let user select a specific range of years (could be 1 year or 10 years)
+
+Show tooltip displaying country year and exact indicator value when user hovers over any point on the line chart
+
+Show slight color change to highlight the highest and lowest values for each indicator (maybe more saturation for highest value and less saturation for lowest value
+
+mobile first and responsive for desktop
+
+add export button that lets users export data in csv or json format for the selected measurement indicators and country filters filters
+
+
+
+ADDITIONAL:
+Use d3.js, chart.js, highchart, or plotly
+load data with javascript using a csv file or a json object
+
+BONUS: 
+create side by side view in the chart (split the graphs into two or three!)
+use css transition when changing between economic indicators or time periods
+implement forecasting model or trendline??
+dark mode :)
+expand upon the data set
