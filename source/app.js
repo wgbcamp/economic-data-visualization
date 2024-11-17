@@ -1,17 +1,21 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import * as d3 from "d3";
-import LinePlot from './components/linePlot.js';
+import React, { useEffect, useState } from "react";
+import "../source/css/main.css";
+import LineGraph from "../source/components/lineGraph.js"
+export default function App() {
+  const [data, setData] = useState();
 
-import React, {useState, useEffect, createRef} from 'react'
-import { Routes, Route } from 'react-router-dom'
-import './css/main.module.css';
+  useEffect(() => {
+    loadData();
+  }, []);
 
-import Homepage from './components/linePlot.js'
+  const loadData = async () => {
+    const response = await fetch("/gdp.json");
+    setData(await response.json());
+  };
 
-export default function App() {  
-    return (
-      <div>
-        <LinePlot/>
-      </div>
-    );
-  }
+  return (
+    <div className="App">
+      <LineGraph/>
+    </div>
+  );
+}

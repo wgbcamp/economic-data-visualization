@@ -2,7 +2,7 @@ Line graph displaying 3 measurements over time ~~DONE
 
 Legend to distinguish between the different indicators (color and shape for endpoints) ~~DONE
 
-Checkbox filter to toggle between different countries
+Checkbox filter to toggle between different countries ~~DONE
 
 Dropdown to toggle between one of the 3 different measurements
 
