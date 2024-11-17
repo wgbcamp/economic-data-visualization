@@ -8,11 +8,11 @@ Dropdown to toggle between one of the 3 different measurements
 
 Slider to let user select a specific range of years (could be 1 year or 10 years)
 
-Show tooltip displaying country year and exact indicator value when user hovers over any point on the line chart
+Show tooltip displaying country year and exact indicator value when user hovers over any point on the line chart ~~DONE
 
 Show slight color change to highlight the highest and lowest values for each indicator (maybe more saturation for highest value and less saturation for lowest value
 
-mobile first and responsive for desktop
+mobile first and responsive for desktop ~~DONE
 
 add export button that lets users export data in csv or json format for the selected measurement indicators and country filters filters
 
