@@ -3,15 +3,17 @@ import Highcharts, { chart, dateFormat } from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import "../css/main.css";
 import { Dropdown, Container, Row, Col, Form } from 'react-bootstrap';
+import { redirect } from 'react-router-dom';
 
-const lineGraph = () => {
+const lineGraph = (props) => {
 
     const chartRef = useRef(null);
 
     const [filter, setFilter] = useState("GDP (USD Billion)");
 
     const handleFilterChange = (event) => {
-        console.log("TEST")
+        console.log(event.slice(0,3));
+        props.getJson(event.slice(0,3));
         setFilter(event);
     }
 
@@ -59,53 +61,7 @@ const lineGraph = () => {
         subtitle: {
             text: 'Source: Sample Dataset'
         },
-        series: [
-                    {
-                    name: "USA",
-                    data: [
-                        [Date.parse('2010-12-31T23:59:00Z'), 15000], 
-                        [Date.parse('2011-12-31T23:59:00Z'), 15500],
-                        [Date.parse('2012-12-31T23:59:00Z'), 16000]
-                        ],
-                    selected: true
-                    },
-                    {
-                    name: "Canada",
-                    data: [
-                        [Date.parse('2010-12-31T23:59:00Z'), 1400], 
-                        [Date.parse('2011-12-31T23:59:00Z'), 1450],
-                        [Date.parse('2012-12-31T23:59:00Z'), 1500]
-                        ],
-                    selected: true
-                    },
-                    {
-                    name: "Germany",
-                    data: [
-                        [Date.parse('2010-12-31T23:59:00Z'), 3300], 
-                        [Date.parse('2011-12-31T23:59:00Z'), 3400],
-                        [Date.parse('2012-12-31T23:59:00Z'), 3500]
-                        ],
-                    selected: true
-                    },
-                    {
-                    name: "India",
-                    data: [
-                        [Date.parse('2010-12-31T23:59:00Z'), 1700], 
-                        [Date.parse('2011-12-31T23:59:00Z'), 1800],
-                        [Date.parse('2012-12-31T23:59:00Z'), 1900]
-                        ],
-                    selected: true
-                    },
-                    {
-                    name: "Brazil",
-                    data: [
-                    [Date.parse('2010-12-31T23:59:00Z'), 2200], 
-                    [Date.parse('2011-12-31T23:59:00Z'), 2300],
-                    [Date.parse('2012-12-31T23:59:00Z'), 2400]
-                        ],
-                    selected: true
-                    },
-                ],
+        series: props.data,
         credits: {
             enabled: false
         },
@@ -163,6 +119,10 @@ const lineGraph = () => {
                 itemClick: function () {
                     return false;
                 }
+            },
+            itemCheckboxStyle: {
+                marginTop: '4px',
+                accentColor: '#f9355d',
             }
         },
         tooltip: {
@@ -216,7 +176,7 @@ const lineGraph = () => {
                     <h3 className='title pt-5'>Filter</h3>
                 </Row>
                 <Row>
-                    <Form.Control className="w-25" as="select" onChange={(e) => 
+                    <Form.Control className="w-50" as="select" onChange={(e) => 
                         handleFilterChange(e.target.value)}>
                         <option value="GDP (USD Billion)">GDP (USD Billion)</option>
                         <option value="Inflation Rate (%)">Inflation Rate (%)</option>
