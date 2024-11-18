@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import Highcharts, { chart, dateFormat } from 'highcharts/highstock'
 import HighchartsReact from 'highcharts-react-official'
 import "../css/main.css";
+// import "../css/highcharts.css";
 import { Dropdown, Container, Row, Col, Form } from 'react-bootstrap';
 import { redirect } from 'react-router-dom';
 
@@ -46,14 +47,30 @@ const lineGraph = (props) => {
             style: {
                 fontFamily: '"Figtree"'
             },
+            // styledMode: true,
             borderRadius: 20,
-            height: (windowSize.height * .65),
+            // height: (windowSize.height * .65) ,
             marginRight: 50,
             borderColor: '#334eff',
+            reflow: true
         },
         navigator: {
             enabled: true
         },
+        responsive: {
+            rules: [
+              {
+                condition: {
+                  maxWidth: 500, // Apply rule if the screen width is <= 500px
+                },
+                chartOptions: {
+                  legend: {
+                    enabled: false,
+                  },
+                },
+              },
+            ],
+          },
         rangeSelector: {
             enabled: true,
             buttons: [{
@@ -188,7 +205,7 @@ const lineGraph = (props) => {
                 <svg viewBox="25 8 90 200" xmlns="http://www.w3.org/2000/svg">
                     <defs>
                         <filter id="blurEffect" x="0" y="0" width="200%" height="200%">
-                            <feGaussianBlur in="SourceGraphic" stdDeviation="5" />
+                            <feGaussianBlur in="SourceGraphic" stdDeviation="7" />
                         </filter>
                     </defs>
                     <g filter="url(#blurEffect)">
@@ -199,9 +216,8 @@ const lineGraph = (props) => {
             </div> 
                     <div className="chartFlex">
                         <div className="chartContainer">
-                            <div className="boxShadow">
-                                <HighchartsReact  
-                                    className="restrict"
+                            <div className="boxShadow highcharts-light">
+                                <HighchartsReact 
                                     highcharts={Highcharts}
                                     constructor={'stockChart'}
                                     options={options}

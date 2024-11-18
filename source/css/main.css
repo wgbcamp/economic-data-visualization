@@ -5,10 +5,16 @@ html {
   font-optical-sizing: auto;
   font-weight: 500;
   font-style: normal;
+  height: 100%;
 }
 
 body {
-  margin: 0
+  margin: 0;
+  height: 100%;
+}
+
+#App {
+  height: 100%;
 }
 
 .removeStyling {
@@ -60,6 +66,3 @@ svg {
   overflow: hidden;
 }
 
-.restrict {
-  height: 400px;
-}

@@ -21,9 +21,11 @@ export default function App() {
       value = "gdp";
     }
     console.log(`/${value}.json`)
+    // fetch json
     const response = await fetch(`/${value}.json`);
     var x = await response.json();
     console.log(x);
+    // parse the dates
     for (var i=0; i<x.length; i++) {
       console.log(x[i].data)
       for (var a=0; a<x[i].data.length; a++) {
@@ -31,6 +33,7 @@ export default function App() {
         x[i].data[a].splice(0, 1, Date.parse(x[i].data[a][0]))
       }
     }
+    // mark the highest and lowest values
     console.log("NEW X")
     console.log(x)
         setData(x);
