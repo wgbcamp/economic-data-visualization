@@ -43,7 +43,7 @@ svg {
   padding-left: 25px;
   padding-right: 25px;
   max-width: 1500px;
-  width: 90%;
+  width: 95%;
 }
 
 .chartTitle {
@@ -65,4 +65,3 @@ svg {
   border-radius: 20px;
   overflow: hidden;
 }
-

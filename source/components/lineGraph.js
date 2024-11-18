@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react'
 import Highcharts, { chart, dateFormat } from 'highcharts/highstock'
 import HighchartsReact from 'highcharts-react-official'
 import "../css/main.css";
-// import "../css/highcharts.css";
 import { Dropdown, Container, Row, Col, Form } from 'react-bootstrap';
 import { redirect } from 'react-router-dom';
 
@@ -17,24 +16,18 @@ const lineGraph = (props) => {
         props.getJson(event.slice(0,3));
         setFilter(event);
         const chart = chartRef.current.chart;
-        // chart.series[1].hide();
         const checkboxes = document.querySelectorAll('input[type="checkbox"]');
         checkboxes.forEach((checkbox, index) => {
                 chart.series[index].show()  
         })
     }
 
-    const [windowSize, setWindowSize] = useState({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      })
-
       useEffect(() => {
         function handleResize() {
-          setWindowSize({
-            width: window.innerWidth,
-            height: window.innerHeight,
-          });
+          if (chartRef.current) {
+            const chart = chartRef.current.chart;
+            chart.setSize();
+          }
         }
 
         window.addEventListener('resize', handleResize);
@@ -47,9 +40,8 @@ const lineGraph = (props) => {
             style: {
                 fontFamily: '"Figtree"'
             },
-            // styledMode: true,
             borderRadius: 20,
-            // height: (windowSize.height * .65) ,
+            height: (window.innerHeight * .65) -50 ,
             marginRight: 50,
             borderColor: '#334eff',
             reflow: true
@@ -65,7 +57,7 @@ const lineGraph = (props) => {
                 },
                 chartOptions: {
                   legend: {
-                    enabled: false,
+                    enabled: true,
                   },
                 },
               },
