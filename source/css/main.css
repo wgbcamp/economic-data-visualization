@@ -95,3 +95,71 @@ svg {
 .toGray {
   color: #737373;
 }
+
+.splash {
+  background-color: #f9f5f1;
+  height: 100%;
+  width: 100%;
+  z-index: 100;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-y: hidden;
+}
+
+.splashText {
+  font-size: 96px;
+  color: #737373;
+  font-weight: 300;
+
+}
+
+.growUp {
+  animation: growFade;
+  animation-duration: 3.8s;
+  animation-fill-mode: forwards;
+}
+
+.fadeOut {
+  animation: fadeOut;
+  animation-delay: 3.6s;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+
+@media screen and (max-width: 1000px) {
+  .splashText {
+    font-size: 70px;
+  }
+}
+
+@media screen and (max-width: 769px) {
+  .splashText {
+    font-size: 50px;
+  }
+}
+
+@media screen and (max-width: 492px) {
+  .splashText {
+    font-size: 40px;
+  }
+}
+
+@keyframes growFade {
+  0% {transform: scale(0);
+      opacity: 0;
+    }
+  50% {transform: scale(1);}
+  70% {transform: scale(1);}
+  100% {transform: scale(0.80);}
+}
+
+@keyframes fadeOut {
+  0% {opacity: 1;}
+  100% {opacity: 0;
+        display: none;    
+  }
+}
