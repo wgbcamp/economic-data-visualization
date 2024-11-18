@@ -258,7 +258,7 @@ const lineGraph = (props) => {
     return(
         <div>
             <div className='svgHeightReduce'>
-                <svg viewBox="25 8 90 220" xmlns="http://www.w3.org/2000/svg">
+                <svg viewBox="25 8 90 105" xmlns="http://www.w3.org/2000/svg">
                     <defs>
                         <filter id="blurEffect" x="0" y="0" width="200%" height="200%">
                             <feGaussianBlur in="SourceGraphic" stdDeviation="7" />
