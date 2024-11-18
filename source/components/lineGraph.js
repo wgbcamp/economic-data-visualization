@@ -163,7 +163,17 @@ const lineGraph = (props) => {
           },
           exporting: {
             enabled: true,
-
+            buttons: {
+                contextButton: {
+                  menuItems: ["viewFullscreen",
+                              "separator",
+                              "printChart",
+                              "separator",
+                              "downloadCSV",
+                              "downloadXLS",
+                            ]
+                }
+              }
           },
         responsive: {
             rules: [{
@@ -242,7 +252,7 @@ const lineGraph = (props) => {
             },
             itemCheckboxStyle: {
                 marginTop: '4px',
-                accentColor: '#f9355d',
+                accentColor: '#f9355d'
             }
         },
         tooltip: {
