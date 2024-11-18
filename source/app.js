@@ -22,7 +22,7 @@ export default function App() {
     }
     console.log(`/${value}.json`)
     // fetch json
-    const response = await fetch(`/${value}.json`);
+    const response = await fetch(`/${value}.json`, { method: 'GET' });
     var x = await response.json();
     console.log(x);
     // parse the dates

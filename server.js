@@ -12,6 +12,7 @@ app.use(cors());
 app.options('*', cors());
 
 app.use(express.static(buildDirectory));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 
 //routes
