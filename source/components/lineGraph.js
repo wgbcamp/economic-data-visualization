@@ -12,22 +12,62 @@ const lineGraph = (props) => {
     const [filter, setFilter] = useState("GDP (USD Billion)");
 
     const handleFilterChange = (event) => {
-        console.log(event.slice(0,3));
-        props.getJson(event.slice(0,3));
-        setFilter(event);
         const chart = chartRef.current.chart;
         const checkboxes = document.querySelectorAll('input[type="checkbox"]');
         checkboxes.forEach((checkbox, index) => {
                 chart.series[index].show()  
-        })
+        });
+        for (var i=0; i<chart.series.length; i++) {
+            for (var a=0; a<chart.series[i].data.length; a++) {
+                chart.series[i].data[a].update({ color: null });
+            }
+   
+        }
+        console.log(event.slice(0,3));
+        props.getJson(event.slice(0,3));
+        setFilter(event);
     }
+
+
+    
+    //mark the highest and lowest points
+
+    function setMarkers() {
+        var x = props.data;
+        if (x) {
+            for (var i=0; i<x.length; i++) {
+                var y = [];
+                var z = [];
+                for (var a=0; a<x[i].data.length; a++) {
+                    y.push(x[i].data[a][1]);
+                    const chart = chartRef.current.chart;
+                    if (a === x[i].data.length-1) {
+                        chart.series[i].data[y.indexOf(Math.max(...y))].update({color: "black"});
+                        chart.series[i].data[y.indexOf(Math.min(...y))].update({color: "darkred"});
+                        console.log(`HIGHEST ${Math.max(...y)}`);
+                    }
+
+                }      
+
+            }
+        }
+    }
+
+    useEffect(() => {
+        setMarkers();
+    }, [props.data]);
+
+    const [windowSize, setWindowSize] = useState({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      })
 
       useEffect(() => {
         function handleResize() {
-          if (chartRef.current) {
-            const chart = chartRef.current.chart;
-            chart.setSize();
-          }
+          setWindowSize({
+            width: window.innerWidth,
+            height: window.innerHeight,
+          });
         }
 
         window.addEventListener('resize', handleResize);
@@ -35,13 +75,15 @@ const lineGraph = (props) => {
         return () => window.removeEventListener('resize', handleResize);
       }, []);
 
+      
+
       const options = {
         chart: {
             style: {
                 fontFamily: '"Figtree"'
             },
             borderRadius: 20,
-            height: (window.innerHeight * .65) -50 ,
+            height: (3 /4 * 100) + '%',
             marginRight: 50,
             borderColor: '#334eff',
             reflow: true
@@ -193,7 +235,7 @@ const lineGraph = (props) => {
 
     return(
         <div>
-            <div className='test'>
+            <div className='svgHeightReduce'>
                 <svg viewBox="25 8 90 200" xmlns="http://www.w3.org/2000/svg">
                     <defs>
                         <filter id="blurEffect" x="0" y="0" width="200%" height="200%">
