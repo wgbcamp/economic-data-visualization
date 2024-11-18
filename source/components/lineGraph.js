@@ -249,7 +249,7 @@ const lineGraph = (props) => {
             formatter: function () {
                 return `<div style="font-size: 15px;font-weight: bold">
                 ${this.series.name}</div>` + '<br> <br> <b>Year: </b>' + 
-                dateFormat('%Y', this.key) + `<br> <b>Value:</b> ${this.y}`
+                dateFormat('%Y', this.key) + `<br> <b>${filter}:</b> ${this.y}`
                 
             }
         }
