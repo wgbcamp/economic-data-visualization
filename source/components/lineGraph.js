@@ -101,7 +101,7 @@ const lineGraph = (props) => {
                 fontFamily: '"Figtree"'
             },
             borderRadius: 20,
-            height: (3 /4 * 100) + '%',
+            height: 725,
             marginRight: 50,
             borderColor: '#334eff',
             reflow: true
@@ -163,12 +163,7 @@ const lineGraph = (props) => {
           },
           exporting: {
             enabled: true,
-            buttons: {
-                contextButtom: {
-                    enabled: true,
-                    menuItems: ['test'],
-                },
-            }
+
           },
         responsive: {
             rules: [{
@@ -263,7 +258,7 @@ const lineGraph = (props) => {
     return(
         <div>
             <div className='svgHeightReduce'>
-                <svg viewBox="25 8 90 200" xmlns="http://www.w3.org/2000/svg">
+                <svg viewBox="25 8 90 220" xmlns="http://www.w3.org/2000/svg">
                     <defs>
                         <filter id="blurEffect" x="0" y="0" width="200%" height="200%">
                             <feGaussianBlur in="SourceGraphic" stdDeviation="7" />
@@ -298,10 +293,10 @@ const lineGraph = (props) => {
                         across multiple countries over a series of years.</div>
                 </Row>
                 <Row>
-                    <Col>
-                        <div className="justify">
+                    <Col sm={12} md={6}>
+                        <div className="justify ">
                             <h3 className='title pt-5 toGray'>Filter</h3>
-                            <Form.Control className="w-50" as="select" onChange={(e) => 
+                            <Form.Control className="w-75 buttonShadow" as="select" onChange={(e) => 
                                 handleFilterChange(e.target.value)}>
                                 <option value="GDP (USD Billion)">GDP (USD Billion)</option>
                                 <option value="Inflation Rate (Annual Percentage Change)">Inflation Rate (Annual Percentage Change)</option>
@@ -310,17 +305,17 @@ const lineGraph = (props) => {
                         </div>
                     </Col>
 
-                    <Col>
-                        <div className="justify toGray">
-                            <h3 className='title pt-5'>Export .csv file</h3>
-                            <button className="buttonFix" onClick={() => downloadCSV()}>
-                                <i class="fa-solid fa-file-export fa-xl"></i>
+                    <Col sm={12} md={6}>
+                        <div className="justify toGray paddingTitle">
+                            <h3 className='title pt-5'>Export to .csv file</h3>
+                            <button className="buttonFix w-75 buttonShadow" onClick={() => downloadCSV()}>
+                                <i className="fa-solid fa-file-export fa-xl"></i>
                             </button>
+                            
                         </div>
                     </Col>
                 </Row>
             </Container>
-
         </div>
     )
 }
