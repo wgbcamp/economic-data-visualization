@@ -183,14 +183,12 @@ const lineGraph = (props) => {
         },
         title: {
             text: filter,
-            y: 20,
             style: {
                 color: "#636363",
             }
         },
         subtitle: {
             text: 'Source: IMF World Economic Outlook (October 2024)',
-            y: 41
         },
         
         series: props.data,

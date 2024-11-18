@@ -8,25 +8,25 @@ import Intro from "../source/components/intro.js"
 export default function App() {
 
   // check for intro loading
-  const [hasLoaded, setHasLoaded] = useState(false);
+  // const [hasLoaded, setHasLoaded] = useState(false);
   
 
-  useEffect(() => {
-    const storedValue = localStorage.getItem('myComponentLoaded');
+  // useEffect(() => {
+  //   const storedValue = localStorage.getItem('myComponentLoaded');
 
-    if (storedValue !== 'true') {
-      setHasLoaded(true);
-      localStorage.setItem('myComponentLoaded', 'true');
-    }
-  }, []);
+  //   if (storedValue !== 'true') {
+  //     setHasLoaded(true);
+  //     localStorage.setItem('myComponentLoaded', 'true');
+  //   }
+  // }, []);
 
   // block scrolling until animation finish
-  if (hasLoaded) {
-    document.querySelector('html').style.overflow = "hidden";
-    setTimeout(function() {
-      document.querySelector('html').style.overflow = "auto";
-    }, "3800")
-  }
+  // if (hasLoaded) {
+  //   document.querySelector('html').style.overflow = "hidden";
+  //   setTimeout(function() {
+  //     document.querySelector('html').style.overflow = "auto";
+  //   }, "3800")
+  // }
  
 
   const [data, setData] = useState();
@@ -69,7 +69,6 @@ export default function App() {
 
   return (
     <div className="App">
-       {!hasLoaded ? "" : <Intro/> } 
       <LineGraph getJson={loadData} data={data}/>
     </div>
   );
