@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import Highcharts, { chart, dateFormat } from 'highcharts'
+import Highcharts, { chart, dateFormat } from 'highcharts/highstock'
 import HighchartsReact from 'highcharts-react-official'
 import "../css/main.css";
 import { Dropdown, Container, Row, Col, Form } from 'react-bootstrap';
@@ -15,6 +15,12 @@ const lineGraph = (props) => {
         console.log(event.slice(0,3));
         props.getJson(event.slice(0,3));
         setFilter(event);
+        const chart = chartRef.current.chart;
+        // chart.series[1].hide();
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach((checkbox, index) => {
+                chart.series[index].show()  
+        })
     }
 
     const [windowSize, setWindowSize] = useState({
@@ -45,7 +51,47 @@ const lineGraph = (props) => {
             marginRight: 50,
             borderColor: '#334eff',
         },
-    
+        navigator: {
+            enabled: true
+        },
+        rangeSelector: {
+            enabled: true,
+            buttons: [{
+                type: 'day',
+                count: 1,
+                text: '1d'
+              },
+              {
+                type: 'week',
+                count: 1,
+                text: '1w'
+              },
+              {
+                type: 'month',
+                count: 1,
+                text: '1m'
+              },
+              {
+                type: 'month',
+                count: 3,
+                text: '3m'
+              },
+              {
+                type: 'month',
+                count: 6,
+                text: '6m'
+              },
+              {
+                type: 'year',
+                count: 1,
+                text: "1y"
+              },
+              {
+                type: 'all',
+                text: 'All'
+              }
+            ]
+          },
         responsive: {
             rules: [{
                 condition: {
@@ -55,11 +101,11 @@ const lineGraph = (props) => {
         title: {
             text: filter,
             style: {
-                color: "#636363"
+                color: "#636363",
             }
         },
         subtitle: {
-            text: 'Source: Sample Dataset'
+            text: 'Source: IMF World Economic Outlook (October 2024)'
         },
         series: props.data,
         credits: {
@@ -69,6 +115,7 @@ const lineGraph = (props) => {
             crosshair: {
                 snap: true
             },
+            minRange: 5,
             gridLineWidth: 1,
             type: 'datetime',
             labels: {
@@ -156,6 +203,7 @@ const lineGraph = (props) => {
                                 <HighchartsReact  
                                     className="restrict"
                                     highcharts={Highcharts}
+                                    constructor={'stockChart'}
                                     options={options}
                                     ref={chartRef}
                                 />
@@ -179,7 +227,7 @@ const lineGraph = (props) => {
                     <Form.Control className="w-50" as="select" onChange={(e) => 
                         handleFilterChange(e.target.value)}>
                         <option value="GDP (USD Billion)">GDP (USD Billion)</option>
-                        <option value="Inflation Rate (%)">Inflation Rate (%)</option>
+                        <option value="Inflation Rate (Annual Percentage Change)">Inflation Rate (Annual Percentage Change)</option>
                         <option value="Unemployment Rate (%)">Unemployment Rate (%)</option>
                     </Form.Control>
                 </Row>
