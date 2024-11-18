@@ -2,8 +2,11 @@ import React, { useState, useEffect, useRef } from 'react'
 import Highcharts, { chart, dateFormat } from 'highcharts/highstock'
 import HighchartsReact from 'highcharts-react-official'
 import "../css/main.css";
-import { Dropdown, Container, Row, Col, Form } from 'react-bootstrap';
+import { Dropdown, Container, Row, Col, Form, Button } from 'react-bootstrap';
 import { redirect } from 'react-router-dom';
+import Exporting from 'highcharts/modules/exporting'
+require("highcharts/modules/exporting")(Highcharts);
+require("highcharts/modules/export-data")(Highcharts);
 
 const lineGraph = (props) => {
 
@@ -76,6 +79,21 @@ const lineGraph = (props) => {
       }, []);
 
       
+      // Initialize highcharts exporting module
+      Exporting(Highcharts);
+       useEffect(() => {
+        Highcharts.setOptions({
+            lang: {
+                downloadCSV: 'Download CSV',
+            }
+        })
+       })
+
+       // Download csv function 
+       function downloadCSV() {
+        const chart = chartRef.current.chart;
+        chart.downloadCSV();
+       }
 
       const options = {
         chart: {
@@ -142,6 +160,15 @@ const lineGraph = (props) => {
                 text: 'All'
               }
             ]
+          },
+          exporting: {
+            enabled: true,
+            buttons: {
+                contextButtom: {
+                    enabled: true,
+                    menuItems: ['test'],
+                },
+            }
           },
         responsive: {
             rules: [{
@@ -271,17 +298,27 @@ const lineGraph = (props) => {
                         across multiple countries over a series of years.</div>
                 </Row>
                 <Row>
-                    <h3 className='title pt-5'>Filter</h3>
+                    <Col>
+                        <div className="justify">
+                            <h3 className='title pt-5 toGray'>Filter</h3>
+                            <Form.Control className="w-50" as="select" onChange={(e) => 
+                                handleFilterChange(e.target.value)}>
+                                <option value="GDP (USD Billion)">GDP (USD Billion)</option>
+                                <option value="Inflation Rate (Annual Percentage Change)">Inflation Rate (Annual Percentage Change)</option>
+                                <option value="Unemployment Rate (%)">Unemployment Rate (%)</option>
+                            </Form.Control>
+                        </div>
+                    </Col>
+
+                    <Col>
+                        <div className="justify toGray">
+                            <h3 className='title pt-5'>Export .csv file</h3>
+                            <button className="buttonFix" onClick={() => downloadCSV()}>
+                                <i class="fa-solid fa-file-export fa-xl"></i>
+                            </button>
+                        </div>
+                    </Col>
                 </Row>
-                <Row>
-                    <Form.Control className="w-50" as="select" onChange={(e) => 
-                        handleFilterChange(e.target.value)}>
-                        <option value="GDP (USD Billion)">GDP (USD Billion)</option>
-                        <option value="Inflation Rate (Annual Percentage Change)">Inflation Rate (Annual Percentage Change)</option>
-                        <option value="Unemployment Rate (%)">Unemployment Rate (%)</option>
-                    </Form.Control>
-                </Row>
-                
             </Container>
 
         </div>
