@@ -2,7 +2,9 @@
     Interactive Economic Data Visualization
 </h1>
 
-![Application preview image](./source/images/applicationPreview.png)
+<div align="center">
+    <img src="./source/images/applicationPreview.png" width="600px">
+</div>
 
 ***
 
