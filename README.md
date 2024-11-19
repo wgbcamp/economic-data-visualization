@@ -1,8 +1,8 @@
-<div style="text-align:center; font-size:32px; padding-bottom: 24px">Interactive Economic Data Visualization</div>
+<h1 align="center">
+    Interactive Economic Data Visualization
+</h1>
 
-<div style="display: flex; justify-content: center">
-    <img style="width: 650px; border-radius: 12px; margin-bottom: 24px" src="./source/images/applicationPreview.png">
-</div>
+![Application preview image](./source/images/applicationPreview.png)
 
 ***
 
@@ -30,7 +30,7 @@ JSON files, application source files, and the webpack module bundler output are 
 
 &nbsp;
 
-# Building
+# Installation
 
 &nbsp;
 
