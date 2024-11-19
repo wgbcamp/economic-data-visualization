@@ -1,6 +1,5 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { webpack } = require('webpack');
 
 // provides specifications for which loaders are used, which files are processed
 // or excluded, the webpack build output, and the port where content is served
@@ -16,53 +15,17 @@ module.exports = {
         rules: [
             {
                 test: /\.js$/,
-                exclude: /node_modules/,
-                use: {
-                    loader: 'babel-loader'
-                }
+                use: 'babel-loader',
+                exclude: /node_modules/
             },
             {
-                test:/\.css$/,
-                exclude: /node_modules/,
-                use: [
-                    "style-loader",
-                    {
-                        loader: "css-loader",
-                        options: {
-                            importLoaders: 1,
-                            modules: {
-                                localIdentName:'[name]__[local]--[hash:base64:5]'
-                            },
-                        }
-                    },
-                ],
-                include: /\.module\.css$/,
+                test: /\.css$/i,
+                use: ["style-loader", "css-loader"]              
             },
             {
-                test: /\.css$/,
-                use: ["style-loader", "css-loader"],
-                exclude: /\.module\.css$/,
-              },
-            {
-                test:/\.(png|jpg|jpeg|webp)$/i,
-                type: 'asset/resource'
-            },
-            {
-                test:/\.svg$/,
-                use: [
-                        {
-                            loader: 'svg-url-loader',
-                            options: {
-                                limit: 10000,
-                            }
-                        }
-                ]
-            },
-            {
-                test:/\.(ico|pdf)$/,
-                use: {
-                    loader: 'file-loader'
-                },
+                test:/\.(png|jpg|jpeg|webp|ico|svg|pdf)$/i,
+                type: 'asset/resource',
+                exclude: /node_modules/
             },
         ]
     },
