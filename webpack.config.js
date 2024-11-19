@@ -2,6 +2,9 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { webpack } = require('webpack');
 
+// provides specifications for which loaders are used, which files are processed
+// or excluded, the webpack build output, and the port where content is served
+
 module.exports = {
     entry: './source/index.js',
     output: {

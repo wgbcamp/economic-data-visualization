@@ -1,41 +1,19 @@
 import React, { useEffect, useState } from "react";
 import "../source/css/main.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
-
 import LineGraph from "../source/components/lineGraph.js"
-import Intro from "../source/components/intro.js"
 
 export default function App() {
 
-  // check for intro loading
-  // const [hasLoaded, setHasLoaded] = useState(false);
-  
-
-  // useEffect(() => {
-  //   const storedValue = localStorage.getItem('myComponentLoaded');
-
-  //   if (storedValue !== 'true') {
-  //     setHasLoaded(true);
-  //     localStorage.setItem('myComponentLoaded', 'true');
-  //   }
-  // }, []);
-
-  // block scrolling until animation finish
-  // if (hasLoaded) {
-  //   document.querySelector('html').style.overflow = "hidden";
-  //   setTimeout(function() {
-  //     document.querySelector('html').style.overflow = "auto";
-  //   }, "3800")
-  // }
- 
-
+  // holds .json array after being formatted by loadData()
   const [data, setData] = useState();
 
-  // load gdp data on page load
+  // load data to send to LineGraph component
   useEffect(() => {
     loadData();
   }, []);
 
+  // determine which .json file to fetch
   const loadData = async (value) => {
     if (value === "GDP") {
         value = "gdp";
@@ -46,14 +24,13 @@ export default function App() {
     } else {
       value = "gdp";
     }
-    console.log(`/${value}.json`)
 
     // fetch json
     const response = await fetch(`/${value}.json`, { method: 'GET' });
     var x = await response.json();
-    console.log(x);
 
-    // parse the dates
+    // replace the date array values with unix epoch time for
+    // compatibility with the Highcharts x axis in the LineGraph component
     for (var i=0; i<x.length; i++) {
       console.log(x[i].data)
       for (var a=0; a<x[i].data.length; a++) {
@@ -61,9 +38,6 @@ export default function App() {
         x[i].data[a].splice(0, 1, Date.parse(x[i].data[a][0]))
       }
     }
-    // mark the highest and lowest values
-    console.log("NEW X")
-    console.log(x)
         setData(x);
   };
 

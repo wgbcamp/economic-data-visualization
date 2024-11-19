@@ -1,50 +1,62 @@
+import "../css/main.css";
 import React, { useState, useEffect, useRef } from 'react'
+import { Dropdown, Container, Row, Col, Form, Button } from 'react-bootstrap';
 import Highcharts, { chart, dateFormat } from 'highcharts/highstock'
 import HighchartsReact from 'highcharts-react-official'
-import "../css/main.css";
-import { Dropdown, Container, Row, Col, Form, Button } from 'react-bootstrap';
-import { redirect } from 'react-router-dom';
 import Exporting from 'highcharts/modules/exporting'
 require("highcharts/modules/exporting")(Highcharts);
 require("highcharts/modules/export-data")(Highcharts);
 
 const lineGraph = (props) => {
 
+    // create a reference for the Highcharts component
     const chartRef = useRef(null);
 
+    // store the value of the name of the filter currenty applied
     const [filter, setFilter] = useState("GDP (USD Billion)");
 
+    
     const handleFilterChange = (event) => {
         const chart = chartRef.current.chart;
+
+        // reset status of all checkboxes to checked
         const checkboxes = document.querySelectorAll('input[type="checkbox"]');
         checkboxes.forEach((checkbox, index) => {
                 chart.series[index].show()  
         });
+
+        // update all chart series data values to their original color before
+        // new data values are drawn on chart
         for (var i=0; i<chart.series.length; i++) {
             for (var a=0; a<chart.series[i].data.length; a++) {
                 chart.series[i].data[a].update({ color: null });
             }
    
         }
-        console.log(event.slice(0,3));
+
+        // call parent function to request new series of data
         props.getJson(event.slice(0,3));
         setFilter(event);
     }
 
 
     
-    //mark the highest and lowest points
-
+    // mark the highest and lowest points of each series data array by color
     function setMarkers() {
         var x = props.data;
         if (x) {
             for (var i=0; i<x.length; i++) {
                 var y = [];
-                var z = [];
                 for (var a=0; a<x[i].data.length; a++) {
+
+                    // push number data values to new array
                     y.push(x[i].data[a][1]);
                     const chart = chartRef.current.chart;
                     if (a === x[i].data.length-1) {
+
+                        // update the chart series data containing values that
+                        // matches the highest and lowest values of y array and
+                        // set data points to unique colors
                         chart.series[i].data[y.indexOf(Math.max(...y))].update({color: "black"});
                         chart.series[i].data[y.indexOf(Math.min(...y))].update({color: "darkred"});
                         console.log(`HIGHEST ${Math.max(...y)}`);
@@ -56,31 +68,15 @@ const lineGraph = (props) => {
         }
     }
 
+    // run setMarkers() when component mounts or data values change
     useEffect(() => {
         setMarkers();
     }, [props.data]);
-
-    const [windowSize, setWindowSize] = useState({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      })
-
-      useEffect(() => {
-        function handleResize() {
-          setWindowSize({
-            width: window.innerWidth,
-            height: window.innerHeight,
-          });
-        }
-
-        window.addEventListener('resize', handleResize);
-    
-        return () => window.removeEventListener('resize', handleResize);
-      }, []);
-
       
       // Initialize highcharts exporting module
       Exporting(Highcharts);
+      
+      // set Highcharts csv download option
        useEffect(() => {
         Highcharts.setOptions({
             lang: {
@@ -89,12 +85,13 @@ const lineGraph = (props) => {
         })
        })
 
-       // Download csv function 
+       // download csv function 
        function downloadCSV() {
         const chart = chartRef.current.chart;
         chart.downloadCSV();
        }
 
+       // options for visualizing Highcharts chart
       const options = {
         chart: {
             style: {
@@ -113,12 +110,7 @@ const lineGraph = (props) => {
             rules: [
               {
                 condition: {
-                  maxWidth: 500, // Apply rule if the screen width is <= 500px
-                },
-                chartOptions: {
-                  legend: {
-                    enabled: true,
-                  },
+                  maxWidth: 500,
                 },
               },
             ],
@@ -216,23 +208,20 @@ const lineGraph = (props) => {
                 allowPointSelect: true,
                 showCheckbox: true,
                 events: {
-                    checkboxClick: function (event) {
+                    checkboxClick: function () {
+
+                        // mark all checkboxes with numerically ordered ids
                         const checkboxes = document.querySelectorAll('input[type="checkbox"]');
                         checkboxes.forEach(
                             (checkbox, index) => {
                                 checkbox.id = `checkbox-${index + 1}`;
                             }
                         )
-                        checkboxes.forEach((checkbox, index) => {
-                            if (checkbox.checked){
-                                console.log(`Checkbox with ID ${index} is clicked`);
-                            } else {
-                                console.log(`Checkbox with ID ${index} is NOT clicked`);
-                            }
-                        })
                         if (chartRef.current) {
                             const chart = chartRef.current.chart;
-                            // chart.series[1].hide();
+
+                            // hide or display chart series values based on the
+                            // checked status of each checkbox
                             checkboxes.forEach((checkbox, index) => {
                                 if (!checkbox.checked){
                                     chart.series[index].hide()
@@ -247,6 +236,8 @@ const lineGraph = (props) => {
         },
         legend: {
             events: {
+
+                // remove item click function from legend icons
                 itemClick: function () {
                     return false;
                 }
@@ -257,6 +248,8 @@ const lineGraph = (props) => {
             }
         },
         tooltip: {
+
+            // format tooltip with relevant information
             formatter: function () {
                 return `<div style="font-size: 15px;font-weight: bold">
                 ${this.series.name}</div>` + '<br> <br> <b>Year: </b>' + 
@@ -294,7 +287,7 @@ const lineGraph = (props) => {
                         </div>
                     </div>
 
-            <Container className=''>
+            <Container>
                 <Row>
                     <h1 className='chartTitle'>Economic Data Visualization</h1>
                 </Row>
@@ -307,10 +300,11 @@ const lineGraph = (props) => {
                     <Col sm={12} md={6}>
                         <div className="justify ">
                             <h3 className='title pt-5 toGray'>Filter</h3>
-                            <Form.Control className="w-75 buttonShadow" as="select" onChange={(e) => 
-                                handleFilterChange(e.target.value)}>
+                            <Form.Control className="w-75 buttonShadow" as="select" 
+                            onChange={(e) => handleFilterChange(e.target.value)}>
                                 <option value="GDP (USD Billion)">GDP (USD Billion)</option>
-                                <option value="Inflation Rate (Annual Percentage Change)">Inflation Rate (Annual Percentage Change)</option>
+                                <option value="Inflation Rate (Annual Percentage Change)">
+                                    Inflation Rate (Annual Percentage Change)</option>
                                 <option value="Unemployment Rate (%)">Unemployment Rate (%)</option>
                             </Form.Control>
                         </div>
@@ -319,7 +313,8 @@ const lineGraph = (props) => {
                     <Col sm={12} md={6}>
                         <div className="justify toGray paddingTitle">
                             <h3 className='title pt-5'>Export to .csv file</h3>
-                            <button className="buttonFix w-75 buttonShadow" onClick={() => downloadCSV()}>
+                            <button className="buttonFix w-75 buttonShadow" 
+                                onClick={() => downloadCSV()}>
                                 <i className="fa-solid fa-file-export fa-xl"></i>
                             </button>
                             
