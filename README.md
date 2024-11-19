@@ -12,7 +12,7 @@
 
 Datasets utilize the Highcharts JavaScript library to explore changes in values over time with options to configure filters and ranges before exporting data to a file.
 
-JSON files, application source files, and the webpack module bundler output are served through an http server using the express.js web framework. Frontend assets are built using Bootstrap's responsive elements and React UI components.
+JSON files, application source files, and the webpack module bundler output are served through an http server using the express.js web framework. Frontend assets are built using Bootstrap's CSS framworks elements and React UI components.
 
 ***
 
