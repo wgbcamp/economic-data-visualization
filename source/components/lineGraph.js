@@ -1,11 +1,10 @@
-import "../css/main.css";
 import React, { useState, useEffect, useRef } from 'react'
-import { Dropdown, Container, Row, Col, Form, Button } from 'react-bootstrap';
-import Highcharts, { chart, dateFormat } from 'highcharts/highstock'
+import { Container, Row, Col, Form, } from 'react-bootstrap';
+import Highcharts, { dateFormat } from 'highcharts/highstock'
 import HighchartsReact from 'highcharts-react-official'
 import Exporting from 'highcharts/modules/exporting'
-require("highcharts/modules/exporting")(Highcharts);
-require("highcharts/modules/export-data")(Highcharts);
+import ExportData from 'highcharts/modules/export-data'
+import OfflineExporting from 'highcharts/modules/offline-exporting'
 
 const lineGraph = (props) => {
 
@@ -75,6 +74,8 @@ const lineGraph = (props) => {
       
       // Initialize highcharts exporting module
       Exporting(Highcharts);
+      ExportData(Highcharts);
+      OfflineExporting(Highcharts);
       
       // set Highcharts csv download option
        useEffect(() => {
@@ -158,8 +159,12 @@ const lineGraph = (props) => {
             buttons: {
                 contextButton: {
                   menuItems: ["viewFullscreen",
-                              "separator",
                               "printChart",
+                              "separator",
+                              "downloadPNG",
+                              "downloadJPEG",
+                              "downloadPDF",
+                              "downloadSVG",
                               "separator",
                               "downloadCSV",
                               "downloadXLS",
