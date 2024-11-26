@@ -56,8 +56,10 @@ const lineGraph = (props) => {
                         // update the chart series data containing values that
                         // matches the highest and lowest values of y array and
                         // set data points to unique colors
-                        chart.series[i].data[y.indexOf(Math.max(...y))].update({color: "black"});
-                        chart.series[i].data[y.indexOf(Math.min(...y))].update({color: "darkred"});
+                        chart.series[i].data[y.indexOf(Math.max(...y))]
+                        .update({color: "black"});
+                        chart.series[i].data[y.indexOf(Math.min(...y))]
+                        .update({color: "darkred"});
                         console.log(`HIGHEST ${Math.max(...y)}`);
                     }
 
@@ -216,7 +218,8 @@ const lineGraph = (props) => {
                     checkboxClick: function () {
 
                         // mark all checkboxes with numerically ordered ids
-                        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+                        const checkboxes = document
+                        .querySelectorAll('input[type="checkbox"]');
                         checkboxes.forEach(
                             (checkbox, index) => {
                                 checkbox.id = `checkbox-${index + 1}`;
