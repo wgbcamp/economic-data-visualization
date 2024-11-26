@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 // or excluded, the webpack build output, and the port where content is served
 
 module.exports = {
-    entry: './source/index.js',
+    entry: './source/components/index.js',
     output: {
       path: path.join(__dirname, '/build'),
       filename: 'bundlefile.js',
@@ -35,7 +35,7 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             template: './source/index.html',
-            favicon: './source/favicon.ico',
+            favicon: './source/images/favicon.ico',
             filename: './index.html'
         }),
     ]

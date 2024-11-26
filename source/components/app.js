@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import LineGraph from "../source/components/lineGraph.js"
+import LineGraph from "./lineGraph.js"
 
 export default function App() {
 
