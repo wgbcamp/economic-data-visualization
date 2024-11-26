@@ -9,7 +9,6 @@ module.exports = {
     output: {
       path: path.join(__dirname, '/build'),
       filename: 'bundlefile.js',
-      publicPath: '/'
     },
     module: {
         rules: [
